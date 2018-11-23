@@ -1,3 +1,8 @@
+```
+
+  安装过程请:https://www.cnblogs.com/dukuan/p/9856269.html
+  
+```
 # kubeadm-highavailiability - kubernetes high availiability deployment based on kubeadm, for Kubernetes version v1.11.x/v1.9.x/v1.7.x/v1.6.x
 
 ![k8s logo](images/Kubernetes.png)
