@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    k8s-app: coredns
+  name: coredns-udp
+  namespace: external-dns
+spec:
+  type: LoadBalancer
+  externalIPs:
+  - {{ INGRESS_VIP }}
+  ports:
+  - name: dns
+    port: 53
+    protocol: UDP
+  selector:
+    k8s-app: coredns
