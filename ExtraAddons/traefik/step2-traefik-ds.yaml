@@ -7,6 +7,7 @@ metadata:
 data:
   traefik.toml: |+
     defaultEntryPoints = ["http", "https"]
+    InsecureSkipVerify = true
     [entryPoints]
       [entryPoints.http]
       address = ":80"
@@ -43,19 +44,20 @@ spec:
           name: traefik-conf
       serviceAccountName: traefik-ingress-controller
       terminationGracePeriodSeconds: 60
+      hostNetwork: true
       containers:
       - image: traefik:v1.6.3
         name: traefik-ingress-lb
         ports:
         - name: http
           containerPort: 80
-          hostPort: 80
+    #      hostPort: 80
         - name: https
           containerPort: 443
-          hostPort: 443
+    #      hostPort: 443
         - name: admin
           containerPort: 8080
-          hostPort: 8080
+    #      hostPort: 8080
         volumeMounts:
         - mountPath: "/ssl"
           name: "traefik-cert"
