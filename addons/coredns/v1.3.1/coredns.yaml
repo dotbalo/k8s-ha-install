@@ -55,13 +55,13 @@ data:
     .:53 {
         errors
         health
-        kubernetes CLUSTER_DOMAIN REVERSE_CIDRS {
+        kubernetes cluster.local in-addr.arpa ip6.arpa {
           pods insecure
           upstream
           fallthrough in-addr.arpa ip6.arpa
-        }FEDERATIONS
+        }
         prometheus :9153
-        forward . UPSTREAMNAMESERVER
+        forward . /etc/resolv.conf
         cache 30
         loop
         reload
@@ -168,7 +168,7 @@ metadata:
 spec:
   selector:
     k8s-app: kube-dns
-  clusterIP: CLUSTER_DNS_IP
+  clusterIP: 10.96.0.10
   ports:
   - name: dns
     port: 53
