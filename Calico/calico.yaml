@@ -51,7 +51,7 @@ data:
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
-   name: felixconfigurations.crd.projectcalico.org
+  name: felixconfigurations.crd.projectcalico.org
 spec:
   scope: Cluster
   group: crd.projectcalico.org
@@ -279,7 +279,8 @@ rules:
     verbs:
       - get
   # IPAM resources are manipulated when nodes are deleted.
-  - apiGroups: ["crd.projectcalico.org"]
+  - apiGroups: ["crd.projectcalico.
+rg"]
     resources:
       - ippools
     verbs:
@@ -516,7 +517,7 @@ spec:
         # It can be deleted if this is a fresh installation, or if you have already
         # upgraded to use calico-ipam.
         - name: upgrade-ipam
-          image: calico/cni:v3.10.0
+          image: calico/cni:v3.11.1
           command: ["/opt/cni/bin/calico-ipam", "-upgrade"]
           env:
             - name: KUBERNETES_NODE_NAME
@@ -533,10 +534,12 @@ spec:
               name: host-local-net-dir
             - mountPath: /host/opt/cni/bin
               name: cni-bin-dir
+          securityContext:
+            privileged: true
         # This container installs the CNI binaries
         # and CNI network config file on each node.
         - name: install-cni
-          image: calico/cni:v3.10.0
+          image: calico/cni:v3.11.1
           command: ["/install-cni.sh"]
           env:
             # Name of the CNI config file to create.
@@ -567,19 +570,23 @@ spec:
               name: cni-bin-dir
             - mountPath: /host/etc/cni/net.d
               name: cni-net-dir
+          securityContext:
+            privileged: true
         # Adds a Flex Volume Driver that creates a per-pod Unix Domain Socket to allow Dikastes
         # to communicate with Felix over the Policy Sync API.
         - name: flexvol-driver
-          image: calico/pod2daemon-flexvol:v3.10.0
+          image: calico/pod2daemon-flexvol:v3.11.1
           volumeMounts:
           - name: flexvol-driver-host
             mountPath: /host/driver
+          securityContext:
+            privileged: true
       containers:
         # Runs calico-node container on each Kubernetes node.  This
         # container programs network policy and routes on each
         # host.
         - name: calico-node
-          image: calico/node:v3.10.0
+          image: calico/node:v3.11.1
           env:
             # Use Kubernetes API as the backing datastore.
             - name: DATASTORE_TYPE
@@ -617,7 +624,7 @@ spec:
             # chosen from this range. Changing this value after installation will have
             # no effect. This should fall within `--cluster-cidr`.
             - name: CALICO_IPV4POOL_CIDR
-              value: "192.168.0.0/16"
+              value: "10.244.0.0/16"
             # Disable file logging so `kubectl logs` works.
             - name: CALICO_DISABLE_FILE_LOGGING
               value: "true"
@@ -642,6 +649,7 @@ spec:
               command:
               - /bin/calico-node
               - -felix-live
+              - -bird-live
             periodSeconds: 10
             initialDelaySeconds: 10
             failureThreshold: 6
@@ -753,7 +761,7 @@ spec:
       priorityClassName: system-cluster-critical
       containers:
         - name: calico-kube-controllers
-          image: calico/kube-controllers:v3.10.0
+          image: calico/kube-controllers:v3.11.1
           env:
             # Choose which controllers to run.
             - name: ENABLED_CONTROLLERS
