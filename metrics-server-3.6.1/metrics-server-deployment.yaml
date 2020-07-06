@@ -32,7 +32,7 @@ spec:
          path: /etc/kubernetes/pki
       containers:
       - name: metrics-server
-        image: mirrorgooglecontainers/metrics-server-amd64:v0.3.6
+        image: registry.cn-hangzhou.aliyuncs.com/google_containers/metrics-server-amd64:v0.3.6
         args:
           - --cert-dir=/tmp
           - --secure-port=4443
@@ -51,7 +51,7 @@ spec:
           readOnlyRootFilesystem: true
           runAsNonRoot: true
           runAsUser: 1000
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         volumeMounts:
         - name: tmp-dir
           mountPath: /tmp
