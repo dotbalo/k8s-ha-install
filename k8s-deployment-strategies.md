@@ -40,7 +40,7 @@
 8. rollback: deploy virtualservice/my-app -> svc/my-app-v1
 9. confirmed: remove deploy/my-app-v1 svc/my-app-v1
 
-# shadow deploy istio mode
+#  shadow deploy istio mode
 
 1. create deploy/my-app-v1
 2. create svc/my-app-v1 -> deploy/my-app-v1
