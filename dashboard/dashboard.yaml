@@ -40,9 +40,10 @@ spec:
   ports:
     - port: 443
       targetPort: 8443
+      nodePort: 30000
   selector:
     k8s-app: kubernetes-dashboard
-
+  type: NodePort
 ---
 
 apiVersion: v1
@@ -188,7 +189,7 @@ spec:
       containers:
         - name: kubernetes-dashboard
           image: kubernetesui/dashboard:v2.0.3
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8443
               protocol: TCP

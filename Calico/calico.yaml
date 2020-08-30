@@ -3456,6 +3456,7 @@ spec:
         # upgraded to use calico-ipam.
         - name: upgrade-ipam
           image: calico/cni:v3.15.1
+          imagePullPolicy: IfNotPresent
           command: ["/opt/cni/bin/calico-ipam", "-upgrade"]
           env:
             - name: KUBERNETES_NODE_NAME
@@ -3478,6 +3479,7 @@ spec:
         # and CNI network config file on each node.
         - name: install-cni
           image: calico/cni:v3.15.1
+          imagePullPolicy: IfNotPresent
           command: ["/install-cni.sh"]
           env:
             # Name of the CNI config file to create.
@@ -3514,6 +3516,7 @@ spec:
         # to communicate with Felix over the Policy Sync API.
         - name: flexvol-driver
           image: calico/pod2daemon-flexvol:v3.15.1
+          imagePullPolicy: IfNotPresent
           volumeMounts:
           - name: flexvol-driver-host
             mountPath: /host/driver
@@ -3525,6 +3528,7 @@ spec:
         # host.
         - name: calico-node
           image: calico/node:v3.15.1
+          imagePullPolicy: IfNotPresent
           env:
             # Use Kubernetes API as the backing datastore.
             - name: DATASTORE_TYPE
