@@ -27,9 +27,9 @@ spec:
       # mount in tmp so we can safely use from-scratch images and/or read-only containers
       - name: tmp-dir
         emptyDir: {}
-#       - name: ca-ssl
-#         hostPath:
-#          path: /etc/kubernetes/pki
+      - name: ca-ssl
+        hostPath:
+          path: /etc/kubernetes/pki
       containers:
       - name: metrics-server
         image: registry.cn-hangzhou.aliyuncs.com/google_containers/metrics-server-amd64:v0.3.6
@@ -39,7 +39,7 @@ spec:
           - --metric-resolution=30s
           - --kubelet-insecure-tls
           - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
-          # - --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.crt
+          - --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.crt # change to front-proxy-ca.pem for manually-install
           - --requestheader-username-headers=X-Remote-User
           - --requestheader-group-headers=X-Remote-Group
           - --requestheader-extra-headers-prefix=X-Remote-Extra-
@@ -55,8 +55,8 @@ spec:
         volumeMounts:
         - name: tmp-dir
           mountPath: /tmp
-#         - mountPath: /etc/kubernetes/pki
-#           name: ca-ssl
+        - mountPath: /etc/kubernetes/pki
+          name: ca-ssl
       nodeSelector:
         beta.kubernetes.io/os: linux
         kubernetes.io/arch: "amd64"
