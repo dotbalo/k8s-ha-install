@@ -39,7 +39,7 @@ spec:
           - --metric-resolution=30s
           - --kubelet-insecure-tls
           - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
-          # - --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.pem
+          - --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.pem # change to front-proxy-ca.crt for kubeadm
           - --requestheader-username-headers=X-Remote-User
           - --requestheader-group-headers=X-Remote-Group
           - --requestheader-extra-headers-prefix=X-Remote-Extra-
