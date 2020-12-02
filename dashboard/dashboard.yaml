@@ -40,10 +40,9 @@ spec:
   ports:
     - port: 443
       targetPort: 8443
-      nodePort: 30000
   selector:
     k8s-app: kubernetes-dashboard
-  type: NodePort
+
 ---
 
 apiVersion: v1
@@ -188,8 +187,8 @@ spec:
     spec:
       containers:
         - name: kubernetes-dashboard
-          image: kubernetesui/dashboard:v2.0.3
-          imagePullPolicy: IfNotPresent
+          image: registry.cn-beijing.aliyuncs.com/dotbalo/dashboard:v2.0.4
+          imagePullPolicy: Always
           ports:
             - containerPort: 8443
               protocol: TCP
@@ -272,7 +271,7 @@ spec:
     spec:
       containers:
         - name: dashboard-metrics-scraper
-          image: kubernetesui/metrics-scraper:v1.0.4
+          image: registry.cn-beijing.aliyuncs.com/dotbalo/metrics-scraper:v1.0.4
           ports:
             - containerPort: 8000
               protocol: TCP
@@ -284,8 +283,8 @@ spec:
             initialDelaySeconds: 30
             timeoutSeconds: 30
           volumeMounts:
-          - mountPath: /tmp
-            name: tmp-volume
+            - mountPath: /tmp
+              name: tmp-volume
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
