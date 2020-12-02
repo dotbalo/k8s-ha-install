@@ -12,5 +12,8 @@
       "O": "Kubernetes",
       "OU": "Kubernetes-manual"
     }
-  ]
+  ],
+  "ca": {
+    "expiry": "876000h"
+  }
 }
