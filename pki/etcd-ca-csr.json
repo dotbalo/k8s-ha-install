@@ -12,5 +12,8 @@
       "O": "etcd",
       "OU": "Etcd Security"
     }
-  ]
+  ],
+  "ca": {
+    "expiry": "876000h"
+  }
 }
