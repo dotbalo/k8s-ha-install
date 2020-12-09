@@ -54,7 +54,6 @@ data:
         {
           "type": "calico",
           "log_level": "info",
-          "log_file_path": "/var/log/calico/cni/cni.log",
           "etcd_endpoints": "__ETCD_ENDPOINTS__",
           "etcd_key_file": "__ETCD_KEY_FILE__",
           "etcd_cert_file": "__ETCD_CERT_FILE__",
@@ -225,13 +224,8 @@ spec:
         # This container installs the CNI binaries
         # and CNI network config file on each node.
         - name: install-cni
-          image: calico/cni:v3.16.5
-          command: ["/opt/cni/bin/install"]
-          envFrom:
-          - configMapRef:
-              # Allow KUBERNETES_SERVICE_HOST and KUBERNETES_SERVICE_PORT to be overridden for eBPF mode.
-              name: kubernetes-services-endpoint
-              optional: true
+          image: registry.cn-beijing.aliyuncs.com/dotbalo/cni:v3.15.3
+          command: ["/install-cni.sh"]
           env:
             # Name of the CNI config file to create.
             - name: CNI_CONF_NAME
@@ -269,7 +263,7 @@ spec:
         # Adds a Flex Volume Driver that creates a per-pod Unix Domain Socket to allow Dikastes
         # to communicate with Felix over the Policy Sync API.
         - name: flexvol-driver
-          image: calico/pod2daemon-flexvol:v3.16.5
+          image: registry.cn-beijing.aliyuncs.com/dotbalo/pod2daemon-flexvol:v3.15.3
           volumeMounts:
           - name: flexvol-driver-host
             mountPath: /host/driver
@@ -280,12 +274,7 @@ spec:
         # container programs network policy and routes on each
         # host.
         - name: calico-node
-          image: calico/node:v3.16.5
-          envFrom:
-          - configMapRef:
-              # Allow KUBERNETES_SERVICE_HOST and KUBERNETES_SERVICE_PORT to be overridden for eBPF mode.
-              name: kubernetes-services-endpoint
-              optional: true
+          image: registry.cn-beijing.aliyuncs.com/dotbalo/node:v3.15.3
           env:
             # The location of the etcd cluster.
             - name: ETCD_ENDPOINTS
@@ -409,13 +398,6 @@ spec:
               name: etcd-certs
             - name: policysync
               mountPath: /var/run/nodeagent
-            # For eBPF mode, we need to be able to mount the BPF filesystem at /sys/fs/bpf so we mount in the
-            # parent directory.
-            - name: sysfs
-              mountPath: /sys/fs/
-              # Bidirectional means that, if we mount the BPF filesystem at /sys/fs/bpf it will propagate to the host.
-              # If the host is known to mount that filesystem already then Bidirectional can be omitted.
-              mountPropagation: Bidirectional
       volumes:
         # Used by calico-node.
         - name: lib-modules
@@ -431,10 +413,6 @@ spec:
           hostPath:
             path: /run/xtables.lock
             type: FileOrCreate
-        - name: sysfs
-          hostPath:
-            path: /sys/fs/
-            type: DirectoryOrCreate
         # Used to install CNI.
         - name: cni-bin-dir
           hostPath:
@@ -506,7 +484,7 @@ spec:
       hostNetwork: true
       containers:
         - name: calico-kube-controllers
-          image: calico/kube-controllers:v3.16.5
+          image: registry.cn-beijing.aliyuncs.com/dotbalo/kube-controllers:v3.15.3
           env:
             # The location of the etcd cluster.
             - name: ETCD_ENDPOINTS
