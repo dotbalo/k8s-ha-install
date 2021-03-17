@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: csi-hostpath-resizer 
+  labels:
+    app: csi-hostpath-resizer
+spec:
+  selector:
+    app: csi-hostpath-resizer
+  ports:
+    - name: dummy
+      port: 12345
