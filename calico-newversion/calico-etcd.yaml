@@ -480,7 +480,7 @@ kind: Deployment
 metadata:
   name: calico-kube-controllers
   namespace: kube-system
-  lbels:
+  labels:
     k8s-app: calico-kube-controllers
 spec:
   # The controllers can only have a single active instance.
