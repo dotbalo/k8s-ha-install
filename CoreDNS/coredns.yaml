@@ -116,7 +116,7 @@ spec:
                topologyKey: kubernetes.io/hostname
       containers:
       - name: coredns
-        image: registry.cn-beijing.aliyuncs.com/dotbalo/coredns:1.8.4 
+        image: coredns/coredns:1.8.6
         imagePullPolicy: IfNotPresent
         resources:
           limits:
@@ -185,7 +185,7 @@ metadata:
 spec:
   selector:
     k8s-app: kube-dns
-  clusterIP: 192.168.0.10
+  clusterIP: KUBEDNS_SERVICE_IP 
   ports:
   - name: dns
     port: 53
