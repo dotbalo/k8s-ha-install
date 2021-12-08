@@ -188,8 +188,8 @@ spec:
     spec:
       containers:
         - name: kubernetes-dashboard
-          image: registry.cn-beijing.aliyuncs.com/dotbalo/dashboard:v2.3.1
-          imagePullPolicy: IfNotPresent
+          image: registry.cn-beijing.aliyuncs.com/dotbalo/dashboard:v2.4.0
+          imagePullPolicy: Always
           ports:
             - containerPort: 8443
               protocol: TCP
@@ -267,13 +267,13 @@ spec:
     metadata:
       labels:
         k8s-app: dashboard-metrics-scraper
-      annotations:
-        seccomp.security.alpha.kubernetes.io/pod: 'runtime/default'
     spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: dashboard-metrics-scraper
-          image: registry.cn-beijing.aliyuncs.com/dotbalo/metrics-scraper:v1.0.6
-          imagePullPolicy: IfNotPresent
+          image: registry.cn-beijing.aliyuncs.com/dotbalo/metrics-scraper:v1.0.7
           ports:
             - containerPort: 8000
               protocol: TCP
