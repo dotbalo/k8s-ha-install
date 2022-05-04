@@ -43,7 +43,6 @@ spec:
   selector:
     k8s-app: kubernetes-dashboard
   type: NodePort
-
 ---
 
 apiVersion: v1
@@ -186,9 +185,12 @@ spec:
       labels:
         k8s-app: kubernetes-dashboard
     spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: kubernetes-dashboard
-          image: registry.cn-beijing.aliyuncs.com/dotbalo/dashboard:v2.4.0
+          image: registry.cn-beijing.aliyuncs.com/dotbalo/dashboard:v2.5.1
           imagePullPolicy: Always
           ports:
             - containerPort: 8443
