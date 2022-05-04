@@ -176,6 +176,8 @@ spec:
         volumeMounts:
         - mountPath: /tmp
           name: tmp-dir
+        - name: ca-ssl
+          mountPath: /etc/kubernetes/pki
       nodeSelector:
         kubernetes.io/os: linux
       priorityClassName: system-cluster-critical
@@ -183,6 +185,9 @@ spec:
       volumes:
       - emptyDir: {}
         name: tmp-dir
+      - name: ca-ssl
+        hostPath:
+          path: /etc/kubernetes/pki
 ---
 apiVersion: apiregistration.k8s.io/v1
 kind: APIService
