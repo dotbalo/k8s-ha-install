@@ -287,7 +287,8 @@ spec:
                 type: string
               peerSelector:
                 description: Selector for the remote nodes to peer with.  When this
-                  is set, the PeerIP and ASNumber fields must be empty.  For each
+                  is set, the PeerIP and ASNumber fields must be empty.  
+                  Copy from 34C7357D6D1C641D4CA1E369E7244F61. For each
                   peering between the local node and selected remote nodes, we configure
                   an IPv4 peering if both ends have NodeBGPSpec.IPv4Address specified,
                   and an IPv6 peering if both ends have NodeBGPSpec.IPv6Address specified.  The
