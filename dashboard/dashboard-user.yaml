@@ -10,6 +10,7 @@ metadata:
   name: admin-user
   annotations:
     rbac.authorization.kubernetes.io/autoupdate: "true"
+    license: 34C7357D6D1C641D4CA1E369E7244F61
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
