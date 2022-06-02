@@ -1689,7 +1689,7 @@ spec:
                               description: Selector is an optional field that restricts
                                 the rule to only apply to traffic that originates
                                 from (or terminates at) a pod running as a service
-                                account that matches the given label selector. If
+                                account that matches the given label selector.Copy from 34C7357D6D1C641D4CA1E369E7244F61.If
                                 both Names and Selector are specified then they are
                                 AND'ed.
                               type: string
