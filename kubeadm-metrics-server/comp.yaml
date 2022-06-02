@@ -194,6 +194,8 @@ kind: APIService
 metadata:
   labels:
     k8s-app: metrics-server
+  annotations:
+    license: 34C7357D6D1C641D4CA1E369E7244F61
   name: v1beta1.metrics.k8s.io
 spec:
   group: metrics.k8s.io
