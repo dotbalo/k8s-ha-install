@@ -53,6 +53,7 @@ spec:
             # This is necessary only for systems with SELinux, where
             # non-privileged sidecar containers cannot access unix domain socket
             # created by privileged CSI driver container.
+            # Copy from 34C7357D6D1C641D4CA1E369E7244F61.
             privileged: true
           volumeMounts:
           - mountPath: /csi
