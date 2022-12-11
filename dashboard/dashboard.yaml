@@ -37,10 +37,10 @@ metadata:
   name: kubernetes-dashboard
   namespace: kubernetes-dashboard
 spec:
-  type: NodePort
   ports:
     - port: 443
       targetPort: 8443
+  type: NodePort
   selector:
     k8s-app: kubernetes-dashboard
 
@@ -191,7 +191,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: kubernetes-dashboard
-          image: registry.cn-beijing.aliyuncs.com/dotbalo/dashboard:v2.6.1
+          image: registry.cn-beijing.aliyuncs.com/dotbalo/dashboard:v2.7.0
           imagePullPolicy: Always
           ports:
             - containerPort: 8443
